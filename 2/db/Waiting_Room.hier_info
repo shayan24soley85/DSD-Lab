@@ -1,0 +1,38 @@
+|Waiting_Room
+Clk => Clk.IN1
+Clr => Clr.IN1
+IN_sensor => U.IN1
+OUT_sensor => Enable.IN0
+Ent => always0.IN0
+T => always0.IN1
+Open <= Open~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Close <= Equal0.DB_MAX_OUTPUT_PORT_TYPE
+Count[0] <= up_down_counter:u1.Count
+Count[1] <= up_down_counter:u1.Count
+Count[2] <= up_down_counter:u1.Count
+Count[3] <= up_down_counter:u1.Count
+
+
+|Waiting_Room|up_down_counter:u1
+U => Count.OUTPUTSELECT
+U => Count.OUTPUTSELECT
+U => Count.OUTPUTSELECT
+U => Count.OUTPUTSELECT
+Clk => Count[0]~reg0.CLK
+Clk => Count[1]~reg0.CLK
+Clk => Count[2]~reg0.CLK
+Clk => Count[3]~reg0.CLK
+Clr => Count[0]~reg0.ACLR
+Clr => Count[1]~reg0.ACLR
+Clr => Count[2]~reg0.ACLR
+Clr => Count[3]~reg0.ACLR
+Enable => Count[0]~reg0.ENA
+Enable => Count[3]~reg0.ENA
+Enable => Count[2]~reg0.ENA
+Enable => Count[1]~reg0.ENA
+Count[0] <= Count[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Count[1] <= Count[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Count[2] <= Count[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+Count[3] <= Count[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+

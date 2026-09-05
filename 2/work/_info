@@ -1,0 +1,63 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\altera\13.0sp1
+vup_down_counter
+Z1 I6KkXe<?6W<]KeH8a8DSU?2
+Z2 VK30TLMH7KQT?7BTnF:@E02
+Z3 dC:\D_backup\shayan2\daaneshgaah\DSD_LAB\Main\2
+Z4 w1785854290
+Z5 8C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room.v
+Z6 FC:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room.v
+L0 1
+Z7 OV;L;10.1d;51
+r1
+31
+Z8 !s108 1785915563.662000
+Z9 !s107 C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room.v|
+Z10 !s90 -reportprogress|300|-work|work|C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room.v|
+Z11 o-work work -O0
+!i10b 1
+Z12 !s100 6]XQ@=foAE:W9biFOLNa:0
+!s85 0
+!s101 -O0
+vWaiting_Room
+Z13 Ii_LCON;RBbR8=>R:W0^::2
+Z14 VaOF<1ISNDC1k`Ycl0[6[J0
+R3
+R4
+R5
+R6
+L0 18
+R7
+r1
+31
+R8
+R9
+R10
+R11
+Z15 n@waiting_@room
+!i10b 1
+Z16 !s100 jS[2mMA?ZN>I<YQ]IAY@T2
+!s85 0
+!s101 -O0
+vwaiting_room_tb
+!i10b 1
+Z17 !s100 hgjjCTBE>N]586QkcZUX=3
+Z18 I2hHObYW[1mGjTNEUD@l0W3
+Z19 V<[b9k8;ZGb@mS26Pm]92Y3
+R3
+Z20 w1785830863
+Z21 8C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room_tb.v
+Z22 FC:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room_tb.v
+L0 3
+R7
+r1
+!s85 0
+31
+!s108 1785915563.780000
+!s107 C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room_tb.v|
+Z23 !s90 -reportprogress|300|-work|work|C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room_tb.v|
+!s101 -O0
+R11

@@ -1,0 +1,81 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\D_backup\shayan2\daaneshgaah\DSD_LAB\Main\8
+vtb_uart_top
+Z1 !s100 GR@HPNd_Q46HKjKABd8HK1
+Z2 I^8M`P<;Ce:RQ96kU6A:W@2
+Z3 VWUVXZnAZ4fz<mDE6H_OTE2
+Z4 dC:\D_backup\shayan2\daaneshgaah\DSD_LAB\Main\7
+Z5 w1788271133
+Z6 8C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/tb_UART.v
+Z7 FC:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/tb_UART.v
+L0 3
+Z8 OV;L;10.1d;51
+r1
+31
+Z9 !s90 -reportprogress|300|-work|work|C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/tb_UART.v|
+Z10 o-work work -O0
+!i10b 1
+!s85 0
+Z11 !s108 1788327662.645000
+Z12 !s107 C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/tb_UART.v|
+!s101 -O0
+vuart_rx
+!i10b 1
+Z13 !s100 flV]Ab8U@O2O<1ZS7h;A>2
+Z14 I8V=hjoFcf1^RQj[UAo_?Y1
+Z15 VQDL>K@_G5fSP7obAo]P]V3
+R4
+Z16 w1788167422
+Z17 8C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/UART.v
+Z18 FC:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/UART.v
+L0 41
+R8
+r1
+!s85 0
+31
+Z19 !s108 1788327662.741000
+Z20 !s107 C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/UART.v|
+Z21 !s90 -reportprogress|300|-work|work|C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/UART.v|
+!s101 -O0
+R10
+vuart_top
+!i10b 1
+Z22 !s100 b:Ii<WlD?I5?i<3XX]LSl3
+Z23 InDYcg3BzEz4eMDgCb6X_>0
+Z24 VSDQkMFJj_XS>=DSkWRfj[0
+R4
+R16
+R17
+R18
+L0 90
+R8
+r1
+!s85 0
+31
+R19
+R20
+R21
+!s101 -O0
+R10
+vuart_tx
+!i10b 1
+Z25 !s100 ?QI5D:7dOY>3@zVkdP_410
+Z26 I?[oWDPF:]Y0K2leRdiAh@1
+Z27 V=WX6K5Az7=Yn=4l1`::ba2
+R4
+R16
+R17
+R18
+L0 1
+R8
+r1
+!s85 0
+31
+R19
+R20
+R21
+!s101 -O0
+R10

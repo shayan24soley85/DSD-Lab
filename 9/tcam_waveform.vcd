@@ -1,0 +1,201 @@
+$date
+	Sat Sep  5 20:05:24 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_tcam_16_16 $end
+$var wire 16 ! match_lines [15:0] $end
+$var wire 1 " match_found $end
+$var wire 4 # match_addr [3:0] $end
+$var reg 1 $ clk $end
+$var reg 1 % rst $end
+$var reg 16 & search_data [15:0] $end
+$var reg 1 ' search_en $end
+$var reg 4 ( wr_addr [3:0] $end
+$var reg 16 ) wr_data [15:0] $end
+$var reg 1 * wr_en $end
+$var reg 16 + wr_mask [15:0] $end
+$scope module uut $end
+$var wire 1 $ clk $end
+$var wire 1 % rst $end
+$var wire 16 , search_data [15:0] $end
+$var wire 1 ' search_en $end
+$var wire 4 - wr_addr [3:0] $end
+$var wire 16 . wr_data [15:0] $end
+$var wire 1 * wr_en $end
+$var wire 16 / wr_mask [15:0] $end
+$var wire 1 " match_found $end
+$var reg 4 0 match_addr [3:0] $end
+$var reg 16 1 match_lines [15:0] $end
+$var integer 32 2 i [31:0] $end
+$upscope $end
+$scope task write_entry $end
+$var reg 4 3 addr [3:0] $end
+$var reg 16 4 data [15:0] $end
+$var reg 16 5 mask [15:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx 5
+bx 4
+bx 3
+b11111111111111111111111111111111 2
+b0 1
+b0 0
+b0 /
+b0 .
+b0 -
+b0 ,
+b0 +
+0*
+b0 )
+b0 (
+0'
+b0 &
+1%
+0$
+b0 #
+0"
+b0 !
+$end
+#5000
+b10000 2
+1$
+#10000
+0$
+#15000
+b10000 2
+1$
+#20000
+0$
+0%
+#25000
+1$
+#30000
+0$
+b111111111111 5
+b110000000000000 4
+b0 3
+#35000
+b111111111111 +
+b111111111111 /
+b110000000000000 )
+b110000000000000 .
+1*
+1$
+#40000
+0$
+#45000
+0*
+b101001011111111 5
+b10110000000000 4
+b1 3
+1$
+#50000
+0$
+#55000
+b101001011111111 +
+b101001011111111 /
+b10110000000000 )
+b10110000000000 .
+b1 (
+b1 -
+1*
+1$
+#60000
+0$
+#65000
+0*
+b1000011111111111 5
+b110100000000000 4
+b10 3
+1$
+#70000
+0$
+#75000
+b1000011111111111 +
+b1000011111111111 /
+b110100000000000 )
+b110100000000000 .
+b10 (
+b10 -
+1*
+1$
+#80000
+0$
+#85000
+0*
+b0 5
+b1111000011110000 4
+b11 3
+1$
+#90000
+0$
+#95000
+b0 +
+b0 /
+b1111000011110000 )
+b1111000011110000 .
+b11 (
+b11 -
+1*
+1$
+#100000
+0$
+#105000
+0*
+1$
+#110000
+0$
+#115000
+1$
+#120000
+0$
+#125000
+b0 #
+b0 0
+1"
+b111 !
+b111 1
+b11111111111111111111111111111111 2
+b110111000000000 &
+b110111000000000 ,
+1'
+1$
+#130000
+0$
+#135000
+1$
+#140000
+0$
+#145000
+1$
+#150000
+0$
+#155000
+0"
+b0 !
+b0 1
+b11111111111111111111111111111111 2
+b1000000000000000 &
+b1000000000000000 ,
+1$
+#160000
+0$
+#165000
+1$
+#170000
+0$
+#175000
+1$
+#180000
+0$

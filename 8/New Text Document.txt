@@ -1,0 +1,539 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{eso-pic}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\lstset{breaklines=true, keepspaces=true}
+\usepackage{booktabs}
+
+\titleformat{\section}{\fontsize{18pt}{22pt}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\fontsize{15pt}{19pt}\bfseries}{\thesubsection}{1em}{}
+
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+\usepackage[
+    colorlinks=true,
+    linkcolor=black, 
+    citecolor=blue,
+    urlcolor=blue
+]{hyperref}
+
+\usepackage{xepersian}
+\settextfont[
+    Path = fonts/ ,
+    BoldFont = XB-Niloofar-Bold.ttf
+]{XB-Niloofar.ttf}
+
+\begin{document}
+
+% کادر دور صفحه
+\AddToShipoutPictureBG{
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[draw, line width=2.5pt, minimum width=\paperwidth-2cm, minimum height=\paperheight-2cm, inner sep=0pt] at (current page.center) {};
+        \node[draw, line width=1.0pt, minimum width=\paperwidth-2.3cm, minimum height=\paperheight-2.3cm, inner sep=0pt] at (current page.center) {};
+    \end{tikzpicture}
+}
+
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+    \includegraphics[width=3.5cm]{images/logo.png} \\[0.6cm] 
+    {\fontsize{14pt}{18pt}\selectfont دانشگاه صنعتی شریف} \\[0.2cm]
+    {\fontsize{14pt}{18pt}\selectfont دانشکده مهندسی کامپیوتر}
+
+    \vspace{2.5cm}
+    {\fontsize{12pt}{16pt}\selectfont عنوان:} \\[0.5cm]
+    {\fontsize{22pt}{28pt}\bfseries آزمايش هشتم: \lr{ALU} اعداد مختلط} \\[0.4cm]
+
+    \vspace{1.5cm}
+    {\fontsize{12pt}{16pt}\selectfont نام درس} \\[0.4cm]
+    {\fontsize{14pt}{18pt}\bfseries آزمایشگاه طراحی سیستم های دیجیتال}
+
+    \vspace{1.5cm}
+    {\fontsize{12pt}{16pt}\selectfont نیم‌سال 14043}
+
+    \vspace{1.5cm}
+    {\fontsize{12pt}{16pt}\selectfont استاد} \\[0.4cm]
+    {\fontsize{14pt}{18pt}\bfseries دکتر انصاری}
+
+    \vspace{1.5cm}
+    {\fontsize{12pt}{16pt}\selectfont گروه 8} \\[0.4cm]
+    {\fontsize{14pt}{20pt}\bfseries
+    امیرشایان سلیمانی‌نیا - 403106108 \\[0.2cm]
+    حسن پناهی - 403105833\\[0.2cm]
+    امین استادکاظمی - 403170893}
+
+    \vfill
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\fontsize{13pt}{18pt}\selectfont
+\setlength{\parindent}{1.2cm}
+\setlength{\parskip}{0.25em}
+\setlength{\emergencystretch}{2em}
+
+\section{مقدمه و هدف آزمایش}
+
+هدف اصلی ما در این آزمایش، طراحی یک \lr{ALU} برای انجام عملیات ریاضی (جمع، تفریق و ضرب) روی اعداد مختلط است. چالش اصلی در این آزمایش، محدودیت منابع سخت‌افزاری است؛ به این صورت که برای پیاده‌سازی کل این سیستم، فقط مجاز به استفاده از یک \lr{Adder} و یک \lr{Multiplier} هستیم.
+
+با توجه به این محدودیت، نمی‌توانیم برای عملیاتی مثل ضرب اعداد مختلط سخت‌افزار جداگانه‌ای در نظر بگیریم. بنابراین رویکرد ما این است که با طراحی یک \lr{FSM}، عملیات را به چند \lr{Clock Cycle} بشکنیم تا بتوانیم از همان یک واحد جمع و ضرب به صورت مشترک استفاده کنیم. 
+
+در نهایت، این \lr{ALU} را در کنار یک ماژول \lr{Memory} قرار می‌دهیم تا یک \lr{Pipeline CPU} شکل بگیرد. این ماشین پایه باید بتواند دستورات را از حافظه واکشی کرده و سناریوهای مختلف را اجرا کند.
+\section{شرح آزمایش}
+
+در این آزمایش قصد داریم یک کامپیوتر پایه طراحی کنیم که وظیفه اصلی آن پردازش اعداد مختلط است. پیاده‌سازی به گونه‌ای انجام شده است که می‌تواند عملیات‌های ریاضی شامل جمع، تفریق و ضرب را روی دو عدد مختلط اعمال کند و دستورات مربوط به هر عملیات را به صورت متوالی از یک حافظه بخواند. 
+
+
+\subsection*{ورودی‌ها و خروجی‌های سیستم}
+در طراحی سطح بالای این سیستم، برای ارتباط با محیط بیرون و اعمال سناریوهای مختلف، پورت‌های زیر در نظر گرفته شده‌اند:
+
+\begin{itemize}
+    \item \textbf{ورودی‌ها:} سیستم با \lr{clk} کار می‌کند و یک ورودی \lr{rst} برای ریست مدار دارد. داده‌های ورودی شامل دو عدد مختلط ۸ بیتی علامت‌دار هستند. این اعداد در قالب چهار ورودی مجزا برای بخش‌های حقیقی و موهومی دریافت می‌شوند.
+    \item \textbf{خروجی‌ها:} نتیجه نهایی محاسبات در قالب دو پورت ۱۶ بیتی (برای بخش حقیقی و موهومی) تولید می‌شود. برای اینکه مشخص شود عملیات ریاضی به اتمام رسیده و این خروجی‌ها معتبر هستند، یک سیگنال \lr{done} در نظر گرفته شده است که پس از پایان هر دستور، یک می‌شود. همچنین وضعیت  \lr{PC} را هم به عنوان خروجی قرار دادیم تا در مراحل تست، روند اجرای دستورات قابل رهگیری باشد.
+\end{itemize}
+\newpage
+\section{ساختار مدار و بررسی کدهای پیاده‌سازی}
+
+در این بخش، سیستم را به سه ماژول اصلی تقسیم کرده و ساختار هر کدام را بررسی می‌کنیم. در این پیاده‌سازی، هدف رعایت محدودیت منابع و برقراری ارتباط بین حافظه و واحد محاسباتی بوده است.
+
+\subsection{ماژول \lr{Memory\_32}}
+این ماژول همان حافظه دستورالعمل ماشین پایه است. ما یک آرایه ۳۲ خانه‌ای ۱۶ بیتی تعریف کردیم و ۶ خانه اول آن را برای تست مقداردهی کردیم.:
+
+\vspace{0.5cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/Screenshot 2026-08-27 210059.png}
+    \caption{شماتیک \lr{RTL} ماژول حافظه و استنتاج بلوک \lr{SYNC\_RAM}}
+    \label{fig:mem_rtl}
+\end{figure}
+\vspace{0.5cm}
+
+در شماتیک بالا می‌بینیم که از بلوک‌های \lr{SYNC\_RAM} استفاده شده است.  در نمای داخلی زیر هم مشخص است که خروجی با پالس \lr{clk} همگام است:
+
+\vspace{0.5cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/Screenshot 2026-08-27 210046.png}
+    \caption{نمای داخلی بلوک حافظه در \lr{Quartus}}
+    \label{fig:mem_tech}
+\end{figure}
+\vspace{0.5cm}
+
+برای پیاده‌سازی این بخش، خواندن از حافظه را در یک بلوک \lr{always} حساس به لبه کلاک نوشتیم:
+
+\begin{latin}
+\begin{lstlisting}[language=Verilog, basicstyle=\tiny\ttfamily]
+module Memory_32 (
+    input clk,
+    input [4:0] addr,
+    output reg [15:0] data_out
+);
+    reg [15:0] mem [0:31];
+    
+    initial begin
+        mem[0] = 16'h4000;
+        mem[1] = 16'h8000;
+        mem[2] = 16'hC000;
+        mem[3] = 16'h4000;
+        mem[4] = 16'hC000;
+        mem[5] = 16'h0000;
+    end
+    
+    always @(posedge clk) begin
+        data_out <= mem[addr];
+    end
+endmodule
+\end{lstlisting}
+\end{latin}
+
+\subsection{ماژول \lr{Complex\_ALU} و طراحی \lr{FSM}}
+در این ماژول عملیات ریاضی روی اعداد مختلط انجام می‌شود. با توجه به محدودیت‌ها، فقط یک \lr{Adder} و یک \lr{Multiplier} تعریف کردیم. برای انجام عملیاتی مثل ضرب مختلط با همین منابع محدود، یک \lr{FSM} با ۸ وضعیت طراحی کردیم که گراف آن را در تصویر زیر می‌بینید:
+
+\vspace{0.5cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Screenshot 2026-08-27 210141.png}
+    \caption{دیاگرام گرافیکی \lr{State Machine} استخراج شده از کد در \lr{Quartus}}
+    \label{fig:fsm_diagram}
+\end{figure}
+\vspace{0.5cm}
+
+برای درک بهتر حالت ها، در اینجا مشخص شده است که در هر یک از این ۸ وضعیت دقیقاً چه فرآیندی طی می‌شود:
+
+\begin{itemize}
+    \item \textbf{\lr{IDLE}:} ماشین در این حالت منتظر می‌ماند. با یک شدن سیگنال \lr{start}، بر اساس مقدار \lr{op} تصمیم می‌گیرد که وارد مسیر جمع/تفریق شود یا مسیر ضرب.
+    \item \textbf{\lr{ADD\_SUB\_R}:} در این مرحله، بخش حقیقی دو عدد (\lr{Ar} و \lr{Br}) به \lr{Adder} فرستاده شده و نتیجه در خروجی \lr{Cr} ذخیره می‌شود.
+    \item \textbf{\lr{ADD\_SUB\_I}:} بخش موهومی دو عدد (\lr{Ai} و \lr{Bi}) به \lr{Adder} داده می‌شود. نتیجه در \lr{Ci} ذخیره شده و با یک شدن سیگنال \lr{ready}، ماشین به \lr{IDLE} برمی‌گردد.
+    \item \textbf{\lr{MUL\_RR}:} این اولین مرحله از مسیر ضرب است. \lr{Ar} و \lr{Br} به ضرب‌کننده داده شده و نتیجه موقتاً در رجیستر \lr{temp1} ذخیره می‌شود.
+    \item \textbf{\lr{MUL\_II}:} مقادیر \lr{Ai} و \lr{Bi} در هم ضرب شده و در رجیستر \lr{temp2} ریخته می‌شوند.
+    \item \textbf{\lr{MUL\_RI\_SUB\_R}:} در این حالت دو کار همزمان انجام می‌شود: اول اینکه \lr{temp1} و \lr{temp2} (که نتایج ضرب‌های قبلی هستند) به \lr{Adder} داده می‌شوند تا از هم کم شوند و بخش حقیقی جواب یعنی \lr{Cr} به دست بیاید. همزمان، ضرب ضربدری \lr{Ar} و \lr{Bi} انجام شده و مقدار جدید در \lr{temp1} ذخیره می‌شود.
+    \item \textbf{\lr{MUL\_IR\_SAVE\_R}:} ضرب ضربدری دوم یعنی \lr{Ai} در \lr{Br} انجام شده و نتیجه در \lr{temp2} ذخیره می‌شود.
+    \item \textbf{\lr{FINISH}:} در مرحله آخر، مقادیر جدید \lr{temp1} و \lr{temp2} با هم جمع می‌شوند تا بخش موهومی جواب ساخته شود و در \lr{Ci} قرار بگیرد. سیگنال \lr{ready} یک شده و عملیات تمام می‌شود.
+\end{itemize}
+
+در جدول زیر، شروط انتقال بین این حالت‌ها مشخص شده است:
+
+\vspace{0.5cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Screenshot 2026-08-27 210151.png}
+    \caption{جدول انتقال حالت‌ها (\lr{State Transition Table})}
+    \label{fig:fsm_table}
+\end{figure}
+\vspace{0.5cm}
+
+در کد زیر، \lr{FSM} با استفاده از یک بلوک ترتیبی برای تغییر وضعیت و یک بلوک ترکیبی برای اعمال متغیرها به مدار محاسباتی پیاده‌سازی شده است:
+
+\begin{latin}
+\begin{lstlisting}[language=Verilog, basicstyle=\tiny\ttfamily]
+module Complex_ALU (
+    input clk,
+    input rst,
+    input start,
+    input [1:0] op,
+    input signed [7:0] Ar, Ai, Br, Bi,
+    output reg signed [15:0] Cr, Ci,
+    output reg ready
+);
+
+    localparam IDLE          = 3'd0;
+    localparam ADD_SUB_R     = 3'd1;
+    localparam ADD_SUB_I     = 3'd2;
+    localparam MUL_RR        = 3'd3;
+    localparam MUL_II        = 3'd4;
+    localparam MUL_RI_SUB_R  = 3'd5;
+    localparam MUL_IR_SAVE_R = 3'd6;
+    localparam FINISH        = 3'd7;
+
+    reg signed [15:0] add_in1, add_in2;
+    reg add_sub;
+    wire signed [15:0] add_out;
+    assign add_out = add_sub ? (add_in1 - add_in2) : (add_in1 + add_in2);
+
+    reg signed [7:0] mul_in1, mul_in2;
+    wire signed [15:0] mul_out;
+    assign mul_out = mul_in1 * mul_in2;
+
+    reg [2:0] state;
+    reg signed [15:0] temp1, temp2;
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state <= IDLE;
+            ready <= 0;
+            Cr <= 0;
+            Ci <= 0;
+        end else begin
+            case (state)
+                IDLE: begin
+                    ready <= 0;
+                    if (start) begin
+                        if (op == 1 || op == 2) state <= ADD_SUB_R;
+                        else if (op == 3) state <= MUL_RR;
+                    end
+                end
+                ADD_SUB_R: begin
+                    Cr <= add_out;
+                    state <= ADD_SUB_I;
+                end
+                ADD_SUB_I: begin
+                    Ci <= add_out;
+                    ready <= 1;
+                    state <= IDLE;
+                end
+                MUL_RR: begin
+                    temp1 <= mul_out;
+                    state <= MUL_II;
+                end
+                MUL_II: begin
+                    temp2 <= mul_out;
+                    state <= MUL_RI_SUB_R;
+                end
+                MUL_RI_SUB_R: begin
+                    Cr <= add_out;
+                    temp1 <= mul_out;
+                    state <= MUL_IR_SAVE_R;
+                end
+                MUL_IR_SAVE_R: begin
+                    temp2 <= mul_out;
+                    state <= FINISH;
+                end
+                FINISH: begin
+                    Ci <= add_out;
+                    ready <= 1;
+                    state <= IDLE;
+                end
+                default: state <= IDLE;
+            endcase
+        end
+    end
+
+    always @(*) begin
+        add_in1 = 0; add_in2 = 0; add_sub = 0;
+        mul_in1 = 0; mul_in2 = 0;
+        
+        case (state)
+            ADD_SUB_R: begin
+                add_in1 = {{8{Ar[7]}}, Ar};
+                add_in2 = {{8{Br[7]}}, Br};
+                if (op == 2) add_sub = 1;
+                else add_sub = 0;
+            end
+            ADD_SUB_I: begin
+                add_in1 = {{8{Ai[7]}}, Ai};
+                add_in2 = {{8{Bi[7]}}, Bi};
+                if (op == 2) add_sub = 1;
+                else add_sub = 0;
+            end
+            MUL_RR: begin
+                mul_in1 = Ar; mul_in2 = Br;
+            end
+            MUL_II: begin
+                mul_in1 = Ai; mul_in2 = Bi;
+            end
+            MUL_RI_SUB_R: begin
+                add_in1 = temp1; add_in2 = temp2; add_sub = 1;
+                mul_in1 = Ar; mul_in2 = Bi;
+            end
+            MUL_IR_SAVE_R: begin
+                mul_in1 = Ai; mul_in2 = Br;
+            end
+            FINISH: begin
+                add_in1 = temp1; add_in2 = temp2; add_sub = 0;
+            end
+        endcase
+    end
+endmodule
+\end{lstlisting}
+\end{latin}
+\newpage
+\subsection{ماژول \lr{Pipeline\_CPU} }
+این ماژول در سطح \lr{Top-Level} قرار دارد و از طریق سیمکشی، ماژول‌های حافظه و \lr{ALU} را به هم متصل می‌کند. 
+
+روند کار به این صورت است که متغیر \lr{PC} به عنوان آدرس به حافظه داده می‌شود. چون عملیات‌های \lr{ALU} چند سیکل طول می‌کشد، این ماژول طوری نوشته شده که تا وقتی سیگنال \lr{ready} یک نشده، \lr{PC} متوقف بماند. در کد زیر، برای هماهنگی داده‌ها و جلوگیری از تداخل ورودی‌ها در حین پردازش، از رجیسترهای میانی استفاده شده است.
+
+\begin{latin}
+\begin{lstlisting}[language=Verilog, basicstyle=\tiny\ttfamily]
+module Pipeline_CPU (
+    input clk,
+    input rst,
+    input signed [7:0] data_Ar, data_Ai, data_Br, data_Bi, 
+    output signed [15:0] result_r,
+    output signed [15:0] result_i,
+    output done,
+    output [4:0] current_pc
+);
+    reg [4:0] pc;
+    wire [15:0] instr;
+    reg [15:0] if_id_instr;
+    reg id_ex_start;
+    reg [1:0] id_ex_op;
+    reg signed [7:0] id_ex_Ar, id_ex_Ai, id_ex_Br, id_ex_Bi;
+    wire alu_ready;
+    wire [15:0] alu_Cr, alu_Ci;
+
+    Memory_32 u_mem (
+        .clk(clk),
+        .addr(pc),
+        .data_out(instr)
+    );
+
+    Complex_ALU u_alu (
+        .clk(clk),
+        .rst(rst),
+        .start(id_ex_start),
+        .op(id_ex_op),
+        .Ar(id_ex_Ar),
+        .Ai(id_ex_Ai),
+        .Br(id_ex_Br),
+        .Bi(id_ex_Bi),
+        .Cr(alu_Cr),
+        .Ci(alu_Ci),
+        .ready(alu_ready)
+    );
+
+    assign result_r = alu_Cr;
+    assign result_i = alu_Ci;
+    assign done = alu_ready;
+    assign current_pc = pc;
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            pc <= 0;
+            if_id_instr <= 0;
+            id_ex_start <= 0;
+        end else begin
+            if (alu_ready || pc == 0) begin
+                if_id_instr <= instr;
+                id_ex_op <= instr[15:14];
+                
+                if (instr[15:14] != 0) begin
+                    pc <= pc + 1;
+                    id_ex_start <= 1;
+                    id_ex_Ar <= data_Ar; 
+                    id_ex_Ai <= data_Ai;
+                    id_ex_Br <= data_Br; 
+                    id_ex_Bi <= data_Bi;
+                end else begin
+                    id_ex_start <= 0;
+                end
+            end else begin
+                id_ex_start <= 0;
+            end
+        end
+    end
+endmodule
+\end{lstlisting}
+\end{latin}
+
+
+
+\section{تست مدار و \lr{waveform}}
+\subsection{کد وریلاگ تست بنچ}
+\begin{latin}
+\begin{lstlisting}[language=Verilog, basicstyle=\tiny\ttfamily]
+`timescale 1ns / 1ps
+
+module tb_Pipeline_CPU();
+
+    reg clk;
+    reg rst;
+    reg signed [7:0] test_Ar, test_Ai, test_Br, test_Bi;
+    wire signed [15:0] result_r;
+    wire signed [15:0] result_i;
+    wire done;
+    wire [4:0] current_pc;
+
+    Pipeline_CPU uut (
+        .clk(clk),
+        .rst(rst),
+        .data_Ar(test_Ar),
+        .data_Ai(test_Ai),
+        .data_Br(test_Br),
+        .data_Bi(test_Bi),
+        .result_r(result_r),
+        .result_i(result_i),
+        .done(done),
+        .current_pc(current_pc)
+    );
+
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    always @(*) begin
+        case (current_pc)
+            5'd0: begin test_Ar = 3;  test_Ai = 4;  test_Br = 2;  test_Bi = 1;  end 
+            5'd1: begin test_Ar = -5; test_Ai = 2;  test_Br = 1;  test_Bi = -3; end 
+            5'd2: begin test_Ar = 2;  test_Ai = 3;  test_Br = 4;  test_Bi = 5;  end 
+            5'd3: begin test_Ar = 0;  test_Ai = 0;  test_Br = -7; test_Bi = 8;  end 
+            5'd4: begin test_Ar = -2; test_Ai = -1; test_Br = -3; test_Bi = -2; end 
+            default: begin test_Ar = 0; test_Ai = 0; test_Br = 0; test_Bi = 0; end
+        endcase
+    end
+
+    integer op_count = 0;
+
+    initial begin
+        $display("Starting Simulation...");
+        rst = 1;
+        #15;
+        rst = 0;
+        
+        wait(op_count == 5);
+        #20;
+        $display("Simulation done.");
+        $stop;
+    end
+
+    always @(posedge clk) begin
+        if (done) begin
+            op_count = op_count + 1;
+            
+            case (op_count)
+                1: begin
+                    $display("Test 1 (ADD) | In: A=(3+4i), B=(2+1i) | Res = %0d+%0di | Exp: 5+5i", result_r, result_i);
+                    if (result_r == 5 && result_i == 5) $display(" -> PASS"); else $display(" -> FAIL");
+                end
+                2: begin
+                    $display("Test 2 (SUB) | In: A=(-5+2i), B=(1-3i) | Res = %0d+%0di | Exp: -6+5i", result_r, result_i);
+                    if (result_r == -6 && result_i == 5) $display(" -> PASS"); else $display(" -> FAIL");
+                end
+                3: begin
+                    $display("Test 3 (MUL) | In: A=(2+3i), B=(4+5i) | Res = %0d+%0di | Exp: -7+22i", result_r, result_i);
+                    if (result_r == -7 && result_i == 22) $display(" -> PASS"); else $display(" -> FAIL");
+                end
+                4: begin
+                    $display("Test 4 (ADD) | In: A=(0+0i), B=(-7+8i) | Res = %0d+%0di | Exp: -7+8i", result_r, result_i);
+                    if (result_r == -7 && result_i == 8) $display(" -> PASS"); else $display(" -> FAIL");
+                end
+                5: begin
+                    $display("Test 5 (MUL) | In: A=(-2-1i), B=(-3-2i) | Res = %0d+%0di | Exp: 4+7i", result_r, result_i);
+                    if (result_r == 4 && result_i == 7) $display(" -> PASS"); else $display(" -> FAIL");
+                end
+            endcase
+        end
+    end
+
+endmodule
+\end{lstlisting}
+\end{latin}
+\vspace{2cm}
+\subsection{خروجی ها ، ویوفرم و تحلیل آن ها}
+پس از اجرای تست‌بنچ در نرم‌افزار \lr{ModelSim}، شکل موج اجرای متوالی ۵ دستور از حافظه به دست آمد. همچنین خروجی پیام‌های چاپ شده در ترمینال شبیه‌ساز، وضعیت هر تست را گزارش می‌دهد.
+
+\vspace{1.5cm}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Screenshot 2026-08-27 213645.png}
+    \caption{لاگ‌های چاپ شده در ترمینال شبیه‌ساز  }
+    \label{fig:terminal_log}
+\end{figure}
+\vspace{0.75cm}
+با بررسی دقیق شکل موج در بازه‌های زمانی مختلف (که با متغیر \lr{op\_count} مشخص شده‌اند)، رفتار مدار در هر سناریو به شرح زیر تحلیل می‌شود:
+
+\begin{itemize}
+    \item \textbf{تست ۱ (\lr{ADD}):} 
+    در این بازه، \lr{current\_pc} روی مقدار 00000 قرار دارد و دستور جمع از حافظه خوانده شده است. ورودی‌های مدار \lr{(3+4i)} و \lr{(2+1i)} هستند. مدار در حدود ۳ سیکل کلاک این مقادیر را پردازش می‌کند. در لبه بالا رونده پالس \lr{done}، مقادیر خروجی‌های \lr{result\_r} و \lr{result\_i} روی اعداد ۵ و ۵ تثبیت می‌شوند.
+    
+    \item \textbf{تست ۲ (\lr{SUB}):} 
+    شمارنده برنامه یک واحد اضافه شده (00001). در این سناریو، تفریق اعدادِ دارای علامت تست شده است. ورودی‌ها \lr{(-5+2i)} و \lr{(1-3i)} هستند. رجیسترهای خروجی در انتهای پردازش مقادیر ۶- و ۵ را در خود نگه می‌دارند که نشان می‌دهد واحد \lr{Adder} مدار، عملیات تفریق با در نظر گرفتن بیت علامت را به درستی اجرا کرده است.
+
+    \item \textbf{تست ۳ (\lr{MUL}):} 
+    در سیکل بعدی، دستور ضرب واکشی می‌شود. ورودی‌ها اعداد مثبت \lr{(2+3i)} و \lr{(4+5i)} هستند. نکته مهم در شکل موج این است که فاصله زمانی بین شروع این دستور تا فعال شدن سیگنال \lr{done}، تقریباً دو برابر حالت‌های قبلی (حدود ۶ سیکل کلاک) است. این تاخیر نشان می‌دهد که ماشین حالت در حال استفاده اشتراکی از تنها یک بلوک \lr{Multiplier} در مدار است. در نهایت مقادیر ۷- و ۲۲ در خروجی قرار می‌گیرند.
+
+    \item \textbf{تست ۴ (حالت مرزی \lr{ADD}):} 
+    در این تست، جمع با عدد صفر بررسی شده است. ورودی‌ها \lr{(0+0i)} و \lr{(-7+8i)} هستند. همان‌طور که در شکل موج مشخص است، خروجی‌های \lr{result} بدون تغییر نسبت به ورودی دوم، روی همان ۷- و ۸ تنظیم شده و پالس \lr{done} به سرعت یک می‌شود.
+
+    \item \textbf{تست ۵ (\lr{MUL} با اعداد منفی):} 
+    آخرین سناریو، بررسی ضرب دو عدد منفی است تا منطق علامت ارزیابی شود. ورودی‌ها \lr{(-2-1i)} و \lr{(-3-2i)} هستند. ماشین حالت مانند تست سوم، سیکل‌های طولانی خود را طی می‌کند و در نهایت نتیجه \lr{(4+7i)} در خروجی ظاهر می‌شود.
+\end{itemize}
+\vspace{1cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Screenshot 2026-08-27 214140.png}
+    \caption{شکل موج سیگنال‌های ورودی، خروجی و کنترلی مدار در اجرای ۵ سناریو}
+    \label{fig:waveform}
+\end{figure}
+\vspace{1cm}
+
+\vspace{1cm}
+\section{نتیجه‌گیری}
+
+در این آزمایش، یک \lr{ALU} برای پردازش اعداد مختلط طراحی کردیم و آن را به همراه حافظه در قالب یک ماشین پایه پیاده‌سازی کردیم. چالش اصلی کار، محدودیت استفاده از تنها یک \lr{Adder} و یک \lr{Multiplier} بود. برای رفع این محدودیت، از منطق \lr{FSM} کمک گرفتیم تا عملیات‌های سنگینی مثل ضرب مختلط را در چند \lr{Clock Cycle} بشکنیم و از منابع سخت‌افزاری به صورت مشترک استفاده کنیم. نتایج شبیه‌سازی در \lr{ModelSim} نیز نشان داد که مدار در تمامی سناریوهای تست (اعداد مثبت، منفی و صفر) به درستی کار می‌کند .
+\end{document}

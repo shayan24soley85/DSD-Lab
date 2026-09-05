@@ -1,0 +1,11 @@
+
+State Machine - |Pipeline_CPU|Complex_ALU:u_alu|state
+Name state.FINISH state.MUL_IR_SAVE_R state.MUL_RI_SUB_R state.MUL_II state.MUL_RR state.ADD_SUB_I state.ADD_SUB_R state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.ADD_SUB_R 0 0 0 0 0 0 1 1 
+state.ADD_SUB_I 0 0 0 0 0 1 0 1 
+state.MUL_RR 0 0 0 0 1 0 0 1 
+state.MUL_II 0 0 0 1 0 0 0 1 
+state.MUL_RI_SUB_R 0 0 1 0 0 0 0 1 
+state.MUL_IR_SAVE_R 0 1 0 0 0 0 0 1 
+state.FINISH 1 0 0 0 0 0 0 1 

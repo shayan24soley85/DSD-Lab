@@ -1,0 +1,211 @@
+$date
+	Wed Aug 26 11:08:25 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_incubator_controller $end
+$var wire 1 ! heater $end
+$var wire 4 " crs [3:0] $end
+$var wire 1 # cooler $end
+$var reg 1 $ clk $end
+$var reg 1 % rst_n $end
+$var reg 8 & temp [7:0] $end
+$scope module uut $end
+$var wire 1 $ clk $end
+$var wire 1 % rst_n $end
+$var wire 8 ' temp [7:0] $end
+$var parameter 2 ( FAN_OUT $end
+$var parameter 2 ) FAN_S1 $end
+$var parameter 2 * FAN_S2 $end
+$var parameter 2 + FAN_S3 $end
+$var parameter 2 , MAIN_S1_IDLE $end
+$var parameter 2 - MAIN_S2_COOL $end
+$var parameter 2 . MAIN_S3_HEAT $end
+$var reg 1 # cooler $end
+$var reg 4 / crs [3:0] $end
+$var reg 2 0 fan_state [1:0] $end
+$var reg 1 ! heater $end
+$var reg 2 1 main_state [1:0] $end
+$var reg 2 2 next_fan_state [1:0] $end
+$var reg 2 3 next_main_state [1:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b10 .
+b1 -
+b0 ,
+b11 +
+b10 *
+b1 )
+b0 (
+$end
+#0
+$dumpvars
+b0 3
+b0 2
+b0 1
+b0 0
+b0 /
+b10100 '
+b10100 &
+0%
+0$
+0#
+b0 "
+0!
+$end
+#5000
+1$
+#10000
+0$
+#15000
+1$
+1%
+#20000
+0$
+#25000
+1!
+b10 1
+b10 3
+1$
+b1010 &
+b1010 '
+#30000
+0$
+#35000
+1$
+#40000
+0$
+#45000
+1$
+b11001 &
+b11001 '
+#50000
+0$
+#55000
+1$
+#60000
+0$
+#65000
+0!
+b0 1
+b0 3
+1$
+b100000 &
+b100000 '
+#70000
+0$
+#75000
+1$
+#80000
+0$
+#85000
+1#
+b1 2
+b1 1
+b1 3
+1$
+b100110 &
+b100110 '
+#90000
+0$
+#95000
+b100 "
+b100 /
+b1 0
+1$
+#100000
+0$
+#105000
+b110 "
+b110 /
+b10 0
+b10 2
+1$
+b101010 &
+b101010 '
+#110000
+0$
+#115000
+1$
+#120000
+0$
+#125000
+b1000 "
+b1000 /
+b11 0
+b11 2
+1$
+b110000 &
+b110000 '
+#130000
+0$
+#135000
+1$
+#140000
+0$
+#145000
+b110 "
+b110 /
+b10 0
+b10 2
+1$
+b100110 &
+b100110 '
+#150000
+0$
+#155000
+1$
+#160000
+0$
+#165000
+b100 "
+b100 /
+b1 0
+b1 2
+1$
+b100000 &
+b100000 '
+#170000
+0$
+#175000
+1$
+#180000
+0$
+#185000
+b0 "
+b0 /
+0#
+b0 0
+b0 1
+b0 2
+b0 3
+1$
+b10110 &
+b10110 '
+#190000
+0$
+#195000
+1$
+#200000
+0$
+#205000
+1!
+b10 1
+b10 3
+1$
+b11111011 &
+b11111011 '
+#210000
+0$
+#215000
+1$
+#220000
+0$
+#225000

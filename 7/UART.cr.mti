@@ -1,0 +1,17 @@
+C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/tb_UART.v {1 {vlog -work work C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/tb_UART.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module tb_uart_top
+
+Top level modules:
+	tb_uart_top
+
+} {} {}} C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/UART.v {1 {vlog -work work C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/7/UART.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module uart_tx
+-- Compiling module uart_rx
+-- Compiling module uart_top
+
+Top level modules:
+	uart_top
+
+} {} {}}

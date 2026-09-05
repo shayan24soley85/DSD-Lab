@@ -1,0 +1,8 @@
+
+State Machine - |booth_mult|controller:ctrl|state
+Name state.SHIFT state.CALC state.CHECK state.IDLE state.DONE 
+state.IDLE 0 0 0 0 0 
+state.CHECK 0 0 1 1 0 
+state.CALC 0 1 0 1 0 
+state.SHIFT 1 0 0 1 0 
+state.DONE 0 0 0 1 1 

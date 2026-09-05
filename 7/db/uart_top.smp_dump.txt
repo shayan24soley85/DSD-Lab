@@ -1,0 +1,6 @@
+
+State Machine - |uart_top|uart_rx:rx_unit|state
+Name state.IDLE state.DONE state.RECEIVE 
+state.IDLE 0 0 0 
+state.RECEIVE 1 0 1 
+state.DONE 1 1 0 

@@ -1,0 +1,24 @@
+C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/5/booth_mult.v {1 {vlog -work work C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/5/booth_mult.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module datapath
+-- Compiling module controller
+-- Compiling module booth_mult
+
+Top level modules:
+	booth_mult
+
+} {} {}} C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/5/tb_booth_mult.v {1 {vlog -work work C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/5/tb_booth_mult.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module tb_booth_mult
+
+Top level modules:
+	tb_booth_mult
+
+} {} {}} C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/5/booth_mult_tb.v {1 {vlog -work work C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/5/booth_mult_tb.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module tb_booth_mult
+
+Top level modules:
+	tb_booth_mult
+
+} {} {}}

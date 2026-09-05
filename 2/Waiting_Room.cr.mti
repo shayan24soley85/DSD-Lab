@@ -1,0 +1,16 @@
+C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room.v {1 {vlog -work work C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module up_down_counter
+-- Compiling module Waiting_Room
+
+Top level modules:
+	Waiting_Room
+
+} {} {}} C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room_tb.v {1 {vlog -work work C:/D_backup/shayan2/daaneshgaah/DSD_LAB/Main/2/Waiting_Room_tb.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module waiting_room_tb
+
+Top level modules:
+	waiting_room_tb
+
+} {} {}}

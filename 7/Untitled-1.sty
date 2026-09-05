@@ -1,0 +1,374 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{eso-pic}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\lstset{breaklines=true, keepspaces=true}
+\usepackage{booktabs}
+
+\titleformat{\section}{\fontsize{18pt}{22pt}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\fontsize{15pt}{19pt}\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\fontsize{13pt}{17pt}\bfseries}{\thesubsubsection}{1em}{}
+
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+\usepackage[
+    colorlinks=true,
+    linkcolor=black, 
+    citecolor=blue,
+    urlcolor=blue
+]{hyperref}
+
+\usepackage{xepersian}
+\settextfont[
+    Path = fonts/ ,
+    BoldFont = XB-Niloofar-Bold.ttf
+]{XB-Niloofar.ttf}
+
+\begin{document}
+
+% کادر دور صفحه
+\AddToShipoutPictureBG{
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[draw, line width=2.5pt, minimum width=\paperwidth-2cm, minimum height=\paperheight-2cm, inner sep=0pt] at (current page.center) {};
+        \node[draw, line width=1.0pt, minimum width=\paperwidth-2.3cm, minimum height=\paperheight-2.3cm, inner sep=0pt] at (current page.center) {};
+    \end{tikzpicture}
+}
+
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+    \includegraphics[width=3.5cm]{images/logo.png} \\[0.6cm] 
+    {\fontsize{14pt}{18pt}\selectfont دانشگاه صنعتی شریف} \\[0.2cm]
+    {\fontsize{14pt}{18pt}\selectfont دانشکده مهندسی کامپیوتر}
+
+    \vspace{2.5cm}
+    {\fontsize{12pt}{16pt}\selectfont عنوان:} \\[0.5cm]
+    {\fontsize{22pt}{28pt}\bfseries آزمايش هفتم: \lr{UART}} \\[0.4cm]
+
+    \vspace{1.5cm}
+    {\fontsize{12pt}{16pt}\selectfont نام درس} \\[0.4cm]
+    {\fontsize{14pt}{18pt}\bfseries آزمایشگاه طراحی سیستم های دیجیتال}
+
+    \vspace{1.5cm}
+    {\fontsize{12pt}{16pt}\selectfont نیم‌سال 14043}
+
+    \vspace{1.5cm}
+    {\fontsize{12pt}{16pt}\selectfont استاد} \\[0.4cm]
+    {\fontsize{14pt}{18pt}\bfseries دکتر انصاری}
+
+    \vspace{1.5cm}
+    {\fontsize{12pt}{16pt}\selectfont گروه 8} \\[0.4cm]
+    {\fontsize{14pt}{20pt}\bfseries
+    امیرشایان سلیمانی‌نیا - 403106108 \\[0.2cm]
+    حسن پناهی - 403105833\\[0.2cm]
+    امین استادکاظمی - 403170893}
+
+    \vfill
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\fontsize{13pt}{18pt}\selectfont
+\setlength{\parindent}{1.2cm}
+\setlength{\parskip}{0.25em}
+\setlength{\emergencystretch}{2em}
+\section{مقدمه و هدف آزمایش}
+
+هدف اصلی ما در این آزمایش، آشنایی با پروتکل‌های ارتباطی \lr{Asynchronous} و طراحی یک سیستم \lr{UART} با استفاده از زبان توصیف سخت‌افزار \lr{Verilog} است. در این طراحی، انتقال داده بین دو واحد مجزای \lr{Transmitter} و \lr{Receiver} بر روی یک خط ارتباطی \lr{Serial} شبیه‌سازی می‌شود.
+
+در واقع هدف نهایی این است که با طراحی و پیاده‌سازی این دو بلوک و اتصال آن‌ها به یکدیگر در یک ماژول \lr{Top-Level}، نشان دهیم که سیستم می‌تواند داده‌ها را به درستی پکیج کرده، روی خط انتقال قرار دهد و بدون خطا در سمت گیرنده واکشی کند. 
+
+\section{شرح آزمایش}
+
+برای پیاده‌سازی این ارتباط، باید استاندارد مشخصی را برای فریم‌های ارسالی رعایت کنیم. مدار \lr{Transmitter} به گونه‌ای طراحی می‌شود که دیتای ۷ بیتی \lr{ASCII} را دریافت کرده و با اضافه کردن بیت‌های کنترلی، آن را در قالب یک فریم ۱۰ بیتی ارسال می‌کند. این فریم به ترتیب شامل یک \lr{Start Bit}، یک \lr{Parity Bit}، ۷ بیت دیتای اصلی و در نهایت یک \lr{Stop Bit} است.
+
+در سمت دیگر، بلوک \lr{Receiver} با تکیه بر یک \lr{State Machine} به طور پیوسته وضعیت خط را رصد می‌کند. به محض تشخیص \lr{Start Bit}، سیستم تغییر حالت داده و هشت بیت بعدی (داده اصلی و \lr{Parity Bit}) را خوانده و درون یک \lr{Register} هشت بیتی ذخیره می‌کند.
+
+\subsection*{پورت‌های سیستم}
+در طراحی \lr{Top-Level}، برای اعمال سناریوهای مختلف و کنترل مدار، پورت‌های زیر در نظر گرفته شده‌اند:
+
+\begin{itemize}
+    \item \textbf{ورودی‌ها:} سیستم با سیگنال \lr{clk} کار می‌کند و یک پورت \lr{rst} برای \lr{Reset} مدار دارد. برای فرمان شروع ارسال، یک سیگنال کنترلی به نام \lr{start} تعبیه شده است. داده‌های ورودی نیز در قالب پورت ۷ بیتی \lr{data\_in} دریافت می‌شوند.
+    \item \textbf{خروجی‌ها:} نتیجه نهایی ارتباط که همان دیتای واکشی شده در \lr{Receiver} است، در قالب پورت ۸ بیتی \lr{data\_out} تولید می‌شود. برای اعلام پایان عملیات دریافت و معتبر بودن داده‌های خروجی، سیگنال \lr{done} در نظر گرفته شده است که پس از دریافت کامل فریم، یک می‌شود.
+\end{itemize}
+\newpage
+
+\section{ساختار مدار و پیاده‌سازی سخت‌افزاری}
+
+در این بخش، معماری داخلی سیستم طراحی شده را به تفکیک ماژول‌ها بررسی می‌کنیم. ساختار هر ماژول در دو بخش مجزای تحلیل سخت‌افزاری (بر اساس \lr{RTL}) و تحلیل نرم‌افزاری (بر اساس کدهای \lr{Verilog}) ارائه شده است.
+
+\subsection{تحلیل ماژول \lr{Transmitter}}
+
+\subsubsection{شماتیک مدار و تحلیل سخت‌افزاری}
+ماژول \lr{Transmitter} وظیفه دارد دیتای \lr{Parallel} هفت بیتی را دریافت کرده و به یک جریان \lr{Serial} ده بیتی تبدیل کند. در شماتیک \lr{RTL} این بخش، یک گیت \lr{XOR} چندورودی با نام \lr{WideXor0} دیده می‌شود که وظیفه تولید \lr{Parity Bit} را بر عهده دارد. در مرکز مدار، مجموعه‌ای از \lr{Multiplexer}ها و یک \lr{Shift Register} ده بیتی قرار دارند. 
+
+هنگامی که سیگنال \lr{tx\_start} فعال می‌شود، دیتا به صورت \lr{Parallel} در این \lr{Register} بارگذاری می‌شود. سپس در هر \lr{Clock}، بیت‌ها به سمت راست \lr{Shift} پیدا کرده و \lr{LSB} به خروجی \lr{tx\_out} منتقل می‌شود. یک \lr{Counter} چهار بیتی با نام \lr{bit\_cnt} همراه با یک \lr{Comparator} به نام \lr{Equal0} نیز در مدار وجود دارد که پس از رسیدن به عدد ۹، عملیات ارسال را متوقف کرده و سیگنال \lr{tx\_busy} را \lr{Low} می‌کند.
+
+\vspace{0.75cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/Screenshot 2026-08-31 210618.png}
+    \caption{شماتیک \lr{RTL} مربوط به ماژول \lr{Transmitter}}
+    \label{fig:tx_rtl}
+\end{figure}
+\vspace{0.75cm}
+
+\subsubsection{کد \lr{Verilog} و تحلیل}
+در کد این ماژول، محاسبه \lr{Parity Bit} با استفاده از عملگر کاهش \lr{\textasciicircum data\_in} انجام می‌شود که تعداد یک‌ها را سنجیده و خروجی \lr{assign} تولید می‌کند. در بلاک ترتیبی مدار، با فعال شدن شرط \lr{tx\_start}، فریم ده بیتی با استفاده از عملگر \lr{Concatenation} ساخته می‌شود: مقدار ثابت ۱ برای انتهای فریم، دیتای اصلی، \lr{Parity Bit} و در نهایت مقدار صفر برای \lr{Start Bit} در جایگاه \lr{LSB} قرار می‌گیرد. با ورود به وضعیت \lr{tx\_busy}، در هر کلاک داده‌ها با دستور \lr{shift\_reg[9:1]} به راست شیفت داده می‌شوند و بیت صفرم به پورت \lr{tx\_out} تخصیص می‌یابد تا جریان \lr{Serial} شکل بگیرد.
+\vspace{2cm}
+\begin{latin}
+\begin{lstlisting}[language=Verilog, basicstyle=\tiny\ttfamily]
+    assign parity = ^data_in;
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            tx_out <= 1'b1; tx_busy <= 1'b0; bit_cnt <= 4'd0; shift_reg <= 10'h3FF;
+        end else begin
+            if (tx_start && !tx_busy) begin
+                shift_reg <= {1'b1, data_in, parity, 1'b0};
+                tx_busy <= 1'b1; bit_cnt <= 4'd0; tx_out <= 1'b1;
+            end else if (tx_busy) begin
+                tx_out <= shift_reg[0];
+                shift_reg <= {1'b1, shift_reg[9:1]};
+                if (bit_cnt == 4'd9) begin
+                    tx_busy <= 1'b0; bit_cnt <= 4'd0;
+                end else bit_cnt <= bit_cnt + 1'b1;
+            end
+        end
+    end
+\end{lstlisting}
+\end{latin}
+
+\subsection{تحلیل ماژول \lr{Receiver}}
+
+\subsubsection{شماتیک مدار و تحلیل سخت‌افزاری}
+ماژول \lr{Receiver} بر اساس یک \lr{State Machine} کنترل می‌شود که در شماتیک با یک بلوک زردرنگ مشخص شده است. در اینجا نیز از یک \lr{Counter} چهار بیتی به نام \lr{bit\_cnt} برای شمارش ۸ بیت دریافتی (شامل دیتای اصلی و \lr{Parity Bit}) استفاده شده است. 
+
+دیتا از طریق پورت \lr{rx\_in} وارد مدار شده و مسیر آن توسط \lr{Multiplexer}ها به سمت یک \lr{Shift Register} هشت بیتی هدایت می‌شود. این مدار به گونه‌ای طراحی شده که \lr{Start Bit} سیستم را تحریک می‌کند، اما فقط ۸ بیت پس از آن را ذخیره می‌کند. به محض اینکه \lr{Counter} به عدد ۷ برسد، \lr{State Machine} سیگنال \lr{rx\_done} را فعال کرده و محتوای کامل \lr{Register} را روی \lr{data\_out} قرار می‌دهد. 
+
+
+\vspace{0.75cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/Screenshot 2026-08-31 210643.png}
+    \caption{شماتیک \lr{RTL} مربوط به ماژول \lr{Receiver}}
+    \label{fig:rx_rtl}
+\end{figure}
+تصاویر گراف و جدول زیر نیز نشان می‌دهند که سیستم با دریافت خط \lr{Low} از وضعیت \lr{IDLE} به \lr{RECEIVE} رفته و پس از شمارش کامل، چرخه را در \lr{DONE} به اتمام می‌رساند.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/Screenshot 2026-08-31 210653.png}
+        \caption{گراف \lr{State Machine}}
+    \end{minipage}\hfill
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/Screenshot 2026-08-31 210704.png}
+        \caption{جدول \lr{Transition Conditions}}
+    \end{minipage}
+\end{figure}
+\vspace{0.75cm}
+
+\subsubsection{کد \lr{Verilog} و تحلیل }
+در ساختار نرم‌افزاری، \lr{State Machine} با استفاده از یک ساختار \lr{case} سه‌حالته پیاده‌سازی شده است. در بلاک \lr{IDLE}، مدار پیوسته مقدار \lr{rx\_in == 1'b0} را چک می‌کند تا \lr{Start Bit} را شناسایی کند. با تایید این شرط، سیستم به \lr{RECEIVE} می‌رود. در این مرحله، داده‌های سریال دریافتی با استفاده از عبارت \lr{\{rx\_in, shift\_reg[7:1]\}} از سمت چپ وارد شده و سایر بیت‌ها به راست \lr{Shift} پیدا می‌کنند. در همین حین، \lr{bit\_cnt} افزایش می‌یابد. زمانی که مقدار \lr{bit\_cnt} به عدد ۷ برسد (دریافت ۸ بیت کامل)، سیستم مستقیماً به \lr{DONE} رفته، داده نهایی را روی پورت \lr{data\_out} تثبیت می‌کند و پالس \lr{rx\_done} را تولید می‌نماید.
+
+\begin{latin}
+\begin{lstlisting}[language=Verilog, basicstyle=\tiny\ttfamily]
+    case (state)
+        IDLE: begin
+            if (rx_in == 1'b0) begin state <= RECEIVE; bit_cnt <= 4'd0; end
+        end
+        RECEIVE: begin
+            shift_reg <= {rx_in, shift_reg[7:1]};
+            if (bit_cnt == 4'd7) state <= DONE;
+            else bit_cnt <= bit_cnt + 1'b1;
+        end
+        DONE: begin
+            data_out <= shift_reg; rx_done <= 1'b1; state <= IDLE;
+        end
+        default: state <= IDLE;
+    endcase
+\end{lstlisting}
+\end{latin}
+
+\subsection{تحلیل ساختار \lr{Top-Level}}
+
+\subsubsection{شماتیک مدار و تحلیل سخت‌افزاری}
+برای تست یکپارچگی، ماژول‌های \lr{Transmitter} و \lr{Receiver} در یک بلوک \lr{Top-Level} کپسوله شده‌اند. همان‌طور که در شماتیک \lr{RTL} زیر مشاهده می‌شود، پورت‌های \lr{clk} و \lr{rst} به صورت مشترک به هر دو بلوک متصل شده‌اند تا همگام‌سازی پایه برقرار باشد. خروجی \lr{tx\_out} از طریق یک \lr{Wire} میانی به نام \lr{serial\_line} مستقیماً به ورودی \lr{rx\_in} متصل شده است تا مسیر انتقال فیزیکی در داخل سیستم شبیه‌سازی شود.
+
+\vspace{0.75cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/Screenshot 2026-08-31 210551.png}
+    \caption{شماتیک \lr{RTL} مربوط به \lr{Top-Level} و اتصالات میانی}
+    \label{fig:top_level}
+\end{figure}
+\vspace{0.75cm}
+
+\subsubsection{کد \lr{Verilog} و تحلیل }
+کد این بخش شامل تعریف متغیرهای ارتباطی و \lr{Instantiation} ماژول‌های پایه‌ای است. متغیر \lr{serial\_line} از نوع \lr{wire} تعریف شده و به عنوان پل ارتباطی بین خروجی فرستنده و ورودی گیرنده عمل می‌کند. با فراخوانی \lr{uart\_tx} و \lr{uart\_rx} و اتصال پورت‌های داخلی به پورت‌های \lr{Top-Level}، سیستم نهایی ساختاری مشابه یک تراشه کامل پیدا می‌کند که داده‌های \lr{Parallel} را دریافت، سریال‌سازی، ارسال و مجدداً به صورت \lr{Parallel} واکشی می‌کند.
+
+\begin{latin}
+\begin{lstlisting}[language=Verilog, basicstyle=\tiny\ttfamily]
+module uart_top (
+    input clk, input rst, input start,
+    input [6:0] data_in,
+    output [7:0] data_out, output done
+);
+    wire serial_line, tx_busy;
+
+    uart_tx tx_unit (.clk(clk), .rst(rst), .tx_start(start), 
+                     .data_in(data_in), .tx_out(serial_line), .tx_busy(tx_busy));
+
+    uart_rx rx_unit (.clk(clk), .rst(rst), .rx_in(serial_line), 
+                     .data_out(data_out), .rx_done(done));
+endmodule
+\end{lstlisting}
+\end{latin}
+\newpage
+\section{تست مدار و \lr{Waveform}}
+\subsection{کد \lr{Verilog} مربوط به \lr{Testbench}}
+\begin{latin}
+\begin{lstlisting}[language=Verilog, basicstyle=\tiny\ttfamily]
+`timescale 1ns/1ns
+
+module tb_uart_top;
+
+    reg clk;
+    reg rst;
+    reg start;
+    reg [6:0] data_in;
+    
+    wire [7:0] data_out;
+    wire done;
+    
+    reg [7:0] expected_val;
+    integer pass_count = 0;
+    integer fail_count = 0;
+
+    uart_top uut (
+        .clk(clk),
+        .rst(rst),
+        .start(start),
+        .data_in(data_in),
+        .data_out(data_out),
+        .done(done)
+    );
+
+    always #5 clk = ~clk;
+
+    task test_scenario(input [6:0] test_data, input integer test_num);
+        begin
+            data_in = test_data;
+            expected_val = {test_data, ^test_data}; 
+            
+            start = 1;
+            #10 start = 0;
+            
+            wait(done == 1);
+            #10; 
+            
+            if (data_out == expected_val) begin
+                $display("Scenario %0d: Input = %b | Expected = %b | Received = %b -> [PASS]", test_num, data_in, expected_val, data_out);
+                pass_count = pass_count + 1;
+            end else begin
+                $display("Scenario %0d: Input = %b | Expected = %b | Received = %b -> [FAIL]", test_num, data_in, expected_val, data_out);
+                fail_count = fail_count + 1;
+            end
+            
+            #50; 
+        end
+    endtask
+
+    initial begin
+        clk = 0;
+        rst = 1;
+        start = 0;
+        data_in = 7'b0000000;
+
+        #20 rst = 0;
+        #10;
+        
+        $display("          UART Simulation Started...                     ");
+        
+        test_scenario(7'b0000000, 1);
+        test_scenario(7'b1111111, 2);
+        test_scenario(7'b1010101, 3);
+        test_scenario(7'b0101010, 4);
+        test_scenario(7'b1100110, 5);
+        test_scenario(7'b0011001, 6);
+        test_scenario(7'b0001000, 7);
+
+        $display("Simulation Finished!");
+        $stop;
+    end
+endmodule
+\end{lstlisting}
+\end{latin}
+\vspace{2cm}
+
+\subsection{خروجی‌ها، \lr{Waveform} و تحلیل آن‌ها}
+پس از اجرای \lr{Testbench} در \lr{ModelSim}، لاگ‌های مربوط به ۷ سناریوی مختلف در ترمینال چاپ شد. در این کد از یک \lr{Task} استفاده شده است که متغیر \lr{expected\_val} را با وصل کزدن \lr{Parity Bit} به انتهای داده اصلی تولید می‌کند تا مقایسه خروجی به صورت خودکار انجام شود.
+
+\vspace{0.75cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Screenshot 2026-08-31 220011.png}
+    \caption{لاگ‌های چاپ شده در ترمینال شبیه‌ساز شامل وضعیت ۷ سناریوی تست}
+    \label{fig:terminal_log}
+\end{figure}
+\vspace{0.75cm}
+
+با بررسی دقیق \lr{Waveform} در بازه‌های زمانی مختلف، منطق عملکرد سیستم به شرح زیر تحلیل می‌شود:
+\begin{itemize}
+    \item \textbf{سناریوی ۱ (الگوی \lr{0000000}):} 
+    در این حالت، دیتای ورودی شامل هیچ بیتی با ارزش یک نیست (زوج). بنابراین خروجی بلوک تولید \lr{Parity} صفر است و فریم هدف به صورت \lr{00000000} درمی‌آید. در \lr{Waveform} مشاهده می‌شود که پس از اتمام شیفت‌ها، سیگنال \lr{done} فعال شده و رجیستر خروجی آپدیت می‌شود.
+
+    \item \textbf{سناریوی ۲ (الگوی \lr{1111111}):} 
+    در اینجا تعداد یک‌ها فرد است (هفت عدد)، بنابراین \lr{Parity Bit} یک محاسبه شده و متغیر \lr{expected\_val} مقدار \lr{11111111} را به خود می‌گیرد. پورت \lr{data\_out} نیز دقیقاً روی همین الگو تثبیت می‌شود.
+
+    \item \textbf{سناریوی ۳ (الگوی \lr{1010101}):} 
+    این الگو دارای چهار بیت یک (زوج) است، پس \lr{Parity} برابر صفر شده و مقدار مورد انتظار \lr{10101010} خواهد بود. سیستم به درستی نوسانات خط را دنبال کرده و داده را واکشی می‌کند.
+
+    \item \textbf{سناریوی ۴ (الگوی \lr{0101010}):} 
+    برعکس حالت قبل، این الگو دارای سه بیت یک (فرد) است که منجر به تولید \lr{Parity} یک و خروجی \lr{01010101} می‌شود. \lr{State Machine} بدون از دست دادن هماهنگی، این فریم را نیز به درستی دریافت می‌کند.
+
+    \item \textbf{سناریوی ۵ (الگوی \lr{1100110}):} 
+    این الگو با چهار بیت یک، \lr{Parity} صفر تولید می‌کند و انتظار می‌رود خروجی \lr{11001100} باشد. پالس \lr{done} در زمان‌بندی دقیق و مشابه سناریوهای قبلی فعال می‌شود.
+
+    \item \textbf{سناریوی ۶ (الگوی \lr{0011001}):} 
+    با سه بیت یک در ورودی، \lr{Parity} یک محاسبه شده و داده \lr{00110011} روی پورت خروجی قرار می‌گیرد. متغیر \lr{pass\_count} با موفقیت به عدد ۶ می‌رسد.
+
+    \item \textbf{سناریوی ۷ (الگوی \lr{0001000}):} 
+    در نهایت، الگویی با تنها یک بیت یک (فرد) بررسی می‌شود که \lr{Parity} آن یک است (خروجی \lr{00010001}). فواصل زمانی پالس‌های \lr{start} تا فعال شدن سیگنال \lr{done} در این سناریو نیز کاملاً مشابه شش حالت قبل است که عملکرد یکنواخت و زمان‌بندی دقیق مدار را در تمامی فریم‌ها تایید می‌کند.
+\end{itemize}
+
+\vspace{0.75cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Screenshot 2026-08-31 220138.png}
+    \caption{\lr{Waveform} سیگنال‌های کنترلی، داده و متغیرهای تست در شبیه‌سازی \lr{UART}}
+    \label{fig:waveform}
+\end{figure}
+\vspace{0.75cm}
+
+
+\section{نتیجه‌گیری}
+
+در این آزمایش، معماری یک \lr{UART} با موفقیت پیاده‌سازی شد. چالش اصلی در این طراحی، حفظ هماهنگی زمانی برای دریافت فریم‌ها به صورت \lr{Serial} بود. با بهره‌گیری از یک \lr{State Machine} متمرکز در بخش \lr{Receiver}، توانستیم تشخیص \lr{Start Bit} و واکشی مداوم بیت‌های پس از آن را به صورت سخت‌افزاری فرموله کنیم. 
+
+نتایج شبیه‌سازی نشان داد که اضافه کردن \lr{Parity Bit} به انتهای داده‌ها، مکانیزم مناسبی برای بررسی \lr{Data Integrity} فراهم می‌کند. همچنین کپسوله کردن ماژول‌ها در یک بلاک \lr{Top-Level} ثابت کرد که این سیستم می‌تواند بدون افت کلاک، جریان پیوسته‌ای از فریم‌های ده بیتی را روی یک خط انتقال مدیریت کند.
+\end{document}
