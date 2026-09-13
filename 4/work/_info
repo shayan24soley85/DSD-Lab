@@ -1,0 +1,43 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\DSD lab\4
+vstack
+!i10b 1
+Z1 !s100 K9zX[F66fRX2d?VdW;?g91
+Z2 IDk1_^U^JO73LgLA5el^A[1
+Z3 ViYdzR^m?=;z8J>HEfnm_i1
+Z4 dE:\DSD lab\4
+Z5 w1786981836
+Z6 8stack.v
+Z7 Fstack.v
+L0 1
+Z8 OV;L;10.1d;51
+r1
+!s85 0
+31
+Z9 !s108 1786982365.910000
+Z10 !s107 stack_tb.v|stack.v|
+Z11 !s90 -reportprogress|300|stack.v|stack_tb.v|
+!s101 -O0
+o-O0
+vstack_tb
+!i10b 1
+Z12 !s100 Eb5EU^1>MaNk]V0kD4`HM3
+Z13 I51aCLfi=;8b=oj0R>oV[H2
+Z14 VUcT2MGM1WF^M4NBENZaPk2
+R4
+Z15 w1786981840
+Z16 8stack_tb.v
+Z17 Fstack_tb.v
+L0 3
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!s101 -O0
+o-O0

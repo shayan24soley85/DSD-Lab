@@ -1,0 +1,79 @@
+# Reading A:/modelsim/modelsim_ase/tcl/vsim/pref.tcl 
+# do stack_run_msim_rtl_verilog.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Copying A:\modelsim\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied A:\modelsim\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vlog -vlog01compat -work work +incdir+E:/DSD\ lab/4 {E:/DSD lab/4/stack.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module stack
+# 
+# Top level modules:
+# 	stack
+# 
+# vlog -vlog01compat -work work +incdir+E:/DSD\ lab/4 {E:/DSD lab/4/stack_tb.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module stack_tb
+# 
+# Top level modules:
+# 	stack_tb
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneiv_hssi_ver -L cycloneiv_pcie_hip_ver -L cycloneiv_ver -L rtl_work -L work -voptargs="+acc"  stack_tb
+# vsim -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneiv_hssi_ver -L cycloneiv_pcie_hip_ver -L cycloneiv_ver -L rtl_work -L work -voptargs=\"+acc\" -t 1ps stack_tb 
+# Loading work.stack_tb
+# Loading work.stack
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# ===== TEST 1: Push 8 values (fill the stack) =====
+# Full = 1 (expected 1)
+# 
+# ===== TEST 2: Try to push when full (should be ignored) =====
+# Full = 1 (expected 1, push was ignored)
+# 
+# ===== TEST 3: Pop all 8 values (LIFO order) =====
+# Expected order: 15, 13, 11, 9, 7, 5, 3, 1
+# Popped: 15
+# Popped: 13
+# Popped: 11
+# Popped: 9
+# Popped: 7
+# Popped: 5
+# Popped: 3
+# Popped: 1
+# Empty = 0 (expected 0)
+# 
+# ===== TEST 4: Try to pop when empty (should be ignored) =====
+# Empty = 0 (expected 0, pop was ignored)
+# 
+# ===== TEST 5: Push 3, Pop 1, Push 2, Pop all =====
+# Popped: 6 (expected 6)
+# Popped: 10 (expected 10)
+# Popped: 8 (expected 8)
+# Popped: 4 (expected 4)
+# Popped: 2 (expected 2)
+# Empty = 0 (expected 0)
+# 
+# ===== TEST 6: Simultaneous Push and Pop =====
+# After simultaneous Push(3) & Pop: Data_Out = 14 (expected 14)
+# Popped: 3 (expected 3)
+# Popped: 7 (expected 7)
+# 
+# ===== ALL TESTS COMPLETE =====
+# ** Note: $finish    : E:/DSD lab/4/stack_tb.v(133)
+#    Time: 731 ns  Iteration: 0  Instance: /stack_tb
+# 1
+# Break in Module stack_tb at E:/DSD lab/4/stack_tb.v line 133
+# Simulation Breakpoint: 1
+# Break in Module stack_tb at E:/DSD lab/4/stack_tb.v line 133
+# MACRO ./stack_run_msim_rtl_verilog.do PAUSED at line 17

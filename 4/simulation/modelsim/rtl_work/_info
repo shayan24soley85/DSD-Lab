@@ -1,0 +1,45 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\DSD lab\4\simulation\modelsim
+vstack
+I;FnOi_V8[mo_C1`Oj3:?S0
+ViYdzR^m?=;z8J>HEfnm_i1
+Z1 dE:\DSD lab\4\simulation\modelsim
+w1786981836
+8E:/DSD lab/4/stack.v
+FE:/DSD lab/4/stack.v
+L0 1
+Z2 OV;L;10.1d;51
+r1
+31
+Z3 o-vlog01compat -work work -O0
+!i10b 1
+!s100 ;_CWPTBYi4^dk[SA6_]MF3
+!s85 0
+!s108 1786988645.947000
+!s107 E:/DSD lab/4/stack.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+E:/DSD lab/4|E:/DSD lab/4/stack.v|
+!s101 -O0
+Z4 !s92 -vlog01compat -work work {+incdir+E:/DSD lab/4} -O0
+vstack_tb
+!i10b 1
+!s100 V[^LHlma5hlZ7a_aCgCWI3
+IAiI5ezXn9>OkY3>j=dS;D2
+VUcT2MGM1WF^M4NBENZaPk2
+R1
+w1786981840
+8E:/DSD lab/4/stack_tb.v
+FE:/DSD lab/4/stack_tb.v
+L0 3
+R2
+r1
+!s85 0
+31
+!s108 1786988646.324000
+!s107 E:/DSD lab/4/stack_tb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+E:/DSD lab/4|E:/DSD lab/4/stack_tb.v|
+!s101 -O0
+R3
+R4

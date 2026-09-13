@@ -1,0 +1,136 @@
+Flow report for stack
+Mon Aug 17 21:13:52 2026
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+  8. Flow Messages
+  9. Flow Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++---------------------------------------------------------------------------------------+
+; Flow Summary                                                                          ;
++------------------------------------+--------------------------------------------------+
+; Flow Status                        ; Successful - Mon Aug 17 21:13:52 2026            ;
+; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Full Version ;
+; Revision Name                      ; stack                                            ;
+; Top-level Entity Name              ; stack                                            ;
+; Family                             ; Cyclone IV GX                                    ;
+; Total logic elements               ; 71 / 14,400 ( < 1 % )                            ;
+;     Total combinational functions  ; 54 / 14,400 ( < 1 % )                            ;
+;     Dedicated logic registers      ; 40 / 14,400 ( < 1 % )                            ;
+; Total registers                    ; 40                                               ;
+; Total pins                         ; 14 / 81 ( 17 % )                                 ;
+; Total virtual pins                 ; 0                                                ;
+; Total memory bits                  ; 0 / 552,960 ( 0 % )                              ;
+; Embedded Multiplier 9-bit elements ; 0                                                ;
+; Total GXB Receiver Channel PCS     ; 0 / 2 ( 0 % )                                    ;
+; Total GXB Receiver Channel PMA     ; 0 / 2 ( 0 % )                                    ;
+; Total GXB Transmitter Channel PCS  ; 0 / 2 ( 0 % )                                    ;
+; Total GXB Transmitter Channel PMA  ; 0 / 2 ( 0 % )                                    ;
+; Total PLLs                         ; 0 / 3 ( 0 % )                                    ;
+; Device                             ; EP4CGX15BF14C6                                   ;
+; Timing Models                      ; Final                                            ;
++------------------------------------+--------------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 08/17/2026 21:13:40 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; stack               ;
++-------------------+---------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                      ;
++--------------------------------------+---------------------------------+---------------+-------------+----------------+
+; Assignment Name                      ; Value                           ; Default Value ; Entity Name ; Section Id     ;
++--------------------------------------+---------------------------------+---------------+-------------+----------------+
+; COMPILER_SIGNATURE_ID                ; 181083358229428.178698862013508 ; --            ; --          ; --             ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                              ; --            ; --          ; stack_tb       ;
+; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; stack_tb                        ; --            ; --          ; eda_simulation ;
+; EDA_OUTPUT_DATA_FORMAT               ; Verilog Hdl                     ; --            ; --          ; eda_simulation ;
+; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (Verilog)       ; <None>        ; --          ; --             ;
+; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                 ; --            ; --          ; eda_simulation ;
+; EDA_TEST_BENCH_FILE                  ; stack_tb.v                      ; --            ; --          ; stack_tb       ;
+; EDA_TEST_BENCH_MODULE_NAME           ; stack_tb                        ; --            ; --          ; stack_tb       ;
+; EDA_TEST_BENCH_NAME                  ; stack_tb                        ; --            ; --          ; eda_simulation ;
+; EDA_TIME_SCALE                       ; 1 ps                            ; --            ; --          ; eda_simulation ;
+; PARTITION_COLOR                      ; 16764057                        ; --            ; --          ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; PLACEMENT_AND_ROUTING           ; --            ; --          ; Top            ;
+; PARTITION_NETLIST_TYPE               ; SOURCE                          ; --            ; --          ; Top            ;
+; PROJECT_OUTPUT_DIRECTORY             ; output_files                    ; --            ; --          ; --             ;
++--------------------------------------+---------------------------------+---------------+-------------+----------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:00:01     ; 1.0                     ; 4669 MB             ; 00:00:01                           ;
+; Fitter                    ; 00:00:04     ; 1.0                     ; 5407 MB             ; 00:00:05                           ;
+; Assembler                 ; 00:00:01     ; 1.0                     ; 4557 MB             ; 00:00:00                           ;
+; TimeQuest Timing Analyzer ; 00:00:02     ; 1.0                     ; 4612 MB             ; 00:00:02                           ;
+; EDA Netlist Writer        ; 00:00:01     ; 1.0                     ; 4554 MB             ; 00:00:00                           ;
+; Total                     ; 00:00:09     ; --                      ; --                  ; 00:00:08                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++----------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                        ;
++---------------------------+------------------+-----------+------------+----------------+
+; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
++---------------------------+------------------+-----------+------------+----------------+
+; Analysis & Synthesis      ; Panahi           ; Windows 7 ; 6.2        ; x86_64         ;
+; Fitter                    ; Panahi           ; Windows 7 ; 6.2        ; x86_64         ;
+; Assembler                 ; Panahi           ; Windows 7 ; 6.2        ; x86_64         ;
+; TimeQuest Timing Analyzer ; Panahi           ; Windows 7 ; 6.2        ; x86_64         ;
+; EDA Netlist Writer        ; Panahi           ; Windows 7 ; 6.2        ; x86_64         ;
++---------------------------+------------------+-----------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off stack -c stack
+quartus_fit --read_settings_files=off --write_settings_files=off stack -c stack
+quartus_asm --read_settings_files=off --write_settings_files=off stack -c stack
+quartus_sta stack -c stack
+quartus_eda --read_settings_files=off --write_settings_files=off stack -c stack
+
+
+

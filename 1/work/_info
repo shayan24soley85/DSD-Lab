@@ -1,0 +1,195 @@
+m255
+K3
+13
+cModel Technology
+Z0 dE:\DSD lab\1
+vadd5_const11
+!i10b 1
+Z1 !s100 ]4oj?[A^mTVhl3BW;o>Sk1
+Z2 I4UEhhAG[WA`E[TZAd?meZ2
+Z3 Vn4O:6d]`A:_TX@a=J28`_1
+Z4 dE:\DSD lab\1
+Z5 w1785865551
+Z6 8mult11_bcd16.v
+Z7 Fmult11_bcd16.v
+L0 56
+Z8 OV;L;10.1d;51
+r1
+!s85 0
+31
+Z9 !s108 1785870657.383000
+Z10 !s107 tb_mult11_bcd16.v|mult11_bcd16.v|
+Z11 !s90 -reportprogress|300|mult11_bcd16.v|tb_mult11_bcd16.v|
+!s101 -O0
+o-O0
+vadder4
+!i10b 1
+Z12 !s100 >3N[NY^B[mznHb1[Z`O>B0
+Z13 ISInm<0KlGnJde`LKfDW6;2
+Z14 VEPQbh`YPP;O0Qa?h`FaAi0
+R4
+R5
+R6
+R7
+L0 40
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!s101 -O0
+o-O0
+vbcd_mod3
+Z15 !s100 KWd6[za`l[P;=Y63Oli?U1
+Z16 I5>BFIRJO_YRE6B7KPRZUC2
+Z17 VE@:mSOL<B4Oi<RH4L@ZSb2
+R4
+Z18 w1785865543
+Z19 8mult3_bcd16.v
+Z20 Fmult3_bcd16.v
+L0 19
+R8
+r1
+31
+Z21 !s108 1785870213.524000
+Z22 !s107 tb_mult3_bcd16.v|mult3_bcd16.v|
+Z23 !s90 -reportprogress|300|mult3_bcd16.v|tb_mult3_bcd16.v|
+o-O0
+!i10b 1
+!s85 0
+!s101 -O0
+veq_cmp5
+!i10b 1
+Z24 !s100 VzVgS?ghGec?SOFH[X3<F3
+Z25 I60Z;VOl;4Ug0>io2Z<i=^1
+Z26 VkPjmY39?fmg`[e6_RacPc2
+R4
+R5
+R6
+R7
+L0 73
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!s101 -O0
+o-O0
+vfull_adder
+!i10b 1
+Z27 !s100 GC53;lZ>BFBMJBFnHb0k[0
+Z28 IW=o]lCRFgi>A3]C:5AKI=0
+Z29 VDXIz@A8ZlZIe0^?_MInkU1
+R4
+R5
+R6
+R7
+L0 21
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!s101 -O0
+o-O0
+vmod3_add
+Z30 !s100 hJehn>agPiLA4DggIEB6W0
+Z31 Il5S[TR3Nge07BlBK@9oC:1
+Z32 VVk[@FV[e>V5F]5Uc1>okM1
+R4
+R18
+R19
+R20
+L0 56
+R8
+r1
+31
+R21
+R22
+R23
+o-O0
+!i10b 1
+!s85 0
+!s101 -O0
+vmult11_bcd16
+!i10b 1
+Z33 !s100 [4_`332[EkzG@Ne[_SjFm3
+Z34 IWehX^ziI4^K7T9Y7kf5:W2
+Z35 VScaXnh^3dekBcl:bPH<?50
+R4
+R5
+R6
+R7
+L0 92
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!s101 -O0
+o-O0
+vmult3_bcd16
+Z36 !s100 OHI5l_9[o8`hg5I8bP@K=2
+Z37 IDSZ5^XVMNAzK;^9a=YzDF3
+Z38 V2lb71@RBo<HF=Q>Y[b3?61
+R4
+R18
+R19
+R20
+L0 88
+R8
+r1
+31
+R21
+R22
+R23
+o-O0
+!i10b 1
+!s85 0
+!s101 -O0
+vtb_mult11_bcd16
+!i10b 1
+Z39 !s100 CQ[@Xi1:4=6P^i<L:?on42
+Z40 I<3WLzWAW12V[DBM61makW3
+Z41 V=`imc<H^]KfjPHjG^2UgG0
+R4
+Z42 w1785870171
+Z43 8tb_mult11_bcd16.v
+Z44 Ftb_mult11_bcd16.v
+L0 8
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!s101 -O0
+o-O0
+vtb_mult3_bcd16
+Z45 Ihmh]:AiVXJ`FnFV:Z^h:53
+Z46 VMo;HeR9147o=S3djcI<Om0
+R4
+Z47 w1785870165
+Z48 8tb_mult3_bcd16.v
+Z49 Ftb_mult3_bcd16.v
+L0 8
+R8
+r1
+31
+R21
+R22
+R23
+o-O0
+Z50 !s100 i5HHf_e]h>g7G>eBlOA>P0
+!i10b 1
+!s85 0
+!s101 -O0

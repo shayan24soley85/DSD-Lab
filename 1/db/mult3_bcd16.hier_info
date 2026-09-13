@@ -1,0 +1,223 @@
+|mult3_bcd16
+BCD[0] => BCD[0].IN1
+BCD[1] => BCD[1].IN1
+BCD[2] => BCD[2].IN1
+BCD[3] => BCD[3].IN1
+BCD[4] => BCD[4].IN1
+BCD[5] => BCD[5].IN1
+BCD[6] => BCD[6].IN1
+BCD[7] => BCD[7].IN1
+BCD[8] => BCD[8].IN1
+BCD[9] => BCD[9].IN1
+BCD[10] => BCD[10].IN1
+BCD[11] => BCD[11].IN1
+BCD[12] => BCD[12].IN1
+BCD[13] => BCD[13].IN1
+BCD[14] => BCD[14].IN1
+BCD[15] => BCD[15].IN1
+Y <= comb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|mult3_bcd16|bcd_mod3:u3
+in[0] => WideAnd0.IN0
+in[0] => WideAnd2.IN0
+in[0] => WideAnd4.IN0
+in[0] => WideAnd1.IN0
+in[0] => WideAnd3.IN0
+in[0] => WideAnd5.IN0
+in[1] => WideAnd2.IN1
+in[1] => WideAnd3.IN1
+in[1] => WideAnd0.IN1
+in[1] => WideAnd1.IN1
+in[1] => WideAnd4.IN1
+in[1] => WideAnd5.IN1
+in[2] => WideAnd1.IN2
+in[2] => WideAnd2.IN2
+in[2] => WideAnd4.IN2
+in[2] => WideAnd0.IN2
+in[2] => WideAnd3.IN2
+in[2] => WideAnd5.IN2
+in[3] => WideAnd5.IN3
+in[3] => WideAnd0.IN3
+in[3] => WideAnd1.IN3
+in[3] => WideAnd2.IN3
+in[3] => WideAnd3.IN3
+in[3] => WideAnd4.IN3
+r[0] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+r[1] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|mult3_bcd16|bcd_mod3:u2
+in[0] => WideAnd0.IN0
+in[0] => WideAnd2.IN0
+in[0] => WideAnd4.IN0
+in[0] => WideAnd1.IN0
+in[0] => WideAnd3.IN0
+in[0] => WideAnd5.IN0
+in[1] => WideAnd2.IN1
+in[1] => WideAnd3.IN1
+in[1] => WideAnd0.IN1
+in[1] => WideAnd1.IN1
+in[1] => WideAnd4.IN1
+in[1] => WideAnd5.IN1
+in[2] => WideAnd1.IN2
+in[2] => WideAnd2.IN2
+in[2] => WideAnd4.IN2
+in[2] => WideAnd0.IN2
+in[2] => WideAnd3.IN2
+in[2] => WideAnd5.IN2
+in[3] => WideAnd5.IN3
+in[3] => WideAnd0.IN3
+in[3] => WideAnd1.IN3
+in[3] => WideAnd2.IN3
+in[3] => WideAnd3.IN3
+in[3] => WideAnd4.IN3
+r[0] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+r[1] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|mult3_bcd16|bcd_mod3:u1
+in[0] => WideAnd0.IN0
+in[0] => WideAnd2.IN0
+in[0] => WideAnd4.IN0
+in[0] => WideAnd1.IN0
+in[0] => WideAnd3.IN0
+in[0] => WideAnd5.IN0
+in[1] => WideAnd2.IN1
+in[1] => WideAnd3.IN1
+in[1] => WideAnd0.IN1
+in[1] => WideAnd1.IN1
+in[1] => WideAnd4.IN1
+in[1] => WideAnd5.IN1
+in[2] => WideAnd1.IN2
+in[2] => WideAnd2.IN2
+in[2] => WideAnd4.IN2
+in[2] => WideAnd0.IN2
+in[2] => WideAnd3.IN2
+in[2] => WideAnd5.IN2
+in[3] => WideAnd5.IN3
+in[3] => WideAnd0.IN3
+in[3] => WideAnd1.IN3
+in[3] => WideAnd2.IN3
+in[3] => WideAnd3.IN3
+in[3] => WideAnd4.IN3
+r[0] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+r[1] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|mult3_bcd16|bcd_mod3:u0
+in[0] => WideAnd0.IN0
+in[0] => WideAnd2.IN0
+in[0] => WideAnd4.IN0
+in[0] => WideAnd1.IN0
+in[0] => WideAnd3.IN0
+in[0] => WideAnd5.IN0
+in[1] => WideAnd2.IN1
+in[1] => WideAnd3.IN1
+in[1] => WideAnd0.IN1
+in[1] => WideAnd1.IN1
+in[1] => WideAnd4.IN1
+in[1] => WideAnd5.IN1
+in[2] => WideAnd1.IN2
+in[2] => WideAnd2.IN2
+in[2] => WideAnd4.IN2
+in[2] => WideAnd0.IN2
+in[2] => WideAnd3.IN2
+in[2] => WideAnd5.IN2
+in[3] => WideAnd5.IN3
+in[3] => WideAnd0.IN3
+in[3] => WideAnd1.IN3
+in[3] => WideAnd2.IN3
+in[3] => WideAnd3.IN3
+in[3] => WideAnd4.IN3
+r[0] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+r[1] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|mult3_bcd16|mod3_add:add01
+X[0] => WideAnd1.IN0
+X[0] => WideAnd4.IN0
+X[0] => WideAnd0.IN0
+X[0] => WideAnd2.IN0
+X[0] => WideAnd3.IN0
+X[0] => WideAnd5.IN0
+X[1] => WideAnd2.IN1
+X[1] => WideAnd5.IN1
+X[1] => WideAnd0.IN1
+X[1] => WideAnd1.IN1
+X[1] => WideAnd3.IN1
+X[1] => WideAnd4.IN1
+Y[0] => WideAnd0.IN2
+Y[0] => WideAnd4.IN2
+Y[0] => WideAnd1.IN2
+Y[0] => WideAnd2.IN2
+Y[0] => WideAnd3.IN2
+Y[0] => WideAnd5.IN2
+Y[1] => WideAnd2.IN3
+Y[1] => WideAnd3.IN3
+Y[1] => WideAnd0.IN3
+Y[1] => WideAnd1.IN3
+Y[1] => WideAnd4.IN3
+Y[1] => WideAnd5.IN3
+Z[0] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+Z[1] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|mult3_bcd16|mod3_add:add23
+X[0] => WideAnd1.IN0
+X[0] => WideAnd4.IN0
+X[0] => WideAnd0.IN0
+X[0] => WideAnd2.IN0
+X[0] => WideAnd3.IN0
+X[0] => WideAnd5.IN0
+X[1] => WideAnd2.IN1
+X[1] => WideAnd5.IN1
+X[1] => WideAnd0.IN1
+X[1] => WideAnd1.IN1
+X[1] => WideAnd3.IN1
+X[1] => WideAnd4.IN1
+Y[0] => WideAnd0.IN2
+Y[0] => WideAnd4.IN2
+Y[0] => WideAnd1.IN2
+Y[0] => WideAnd2.IN2
+Y[0] => WideAnd3.IN2
+Y[0] => WideAnd5.IN2
+Y[1] => WideAnd2.IN3
+Y[1] => WideAnd3.IN3
+Y[1] => WideAnd0.IN3
+Y[1] => WideAnd1.IN3
+Y[1] => WideAnd4.IN3
+Y[1] => WideAnd5.IN3
+Z[0] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+Z[1] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|mult3_bcd16|mod3_add:add_tot
+X[0] => WideAnd1.IN0
+X[0] => WideAnd4.IN0
+X[0] => WideAnd0.IN0
+X[0] => WideAnd2.IN0
+X[0] => WideAnd3.IN0
+X[0] => WideAnd5.IN0
+X[1] => WideAnd2.IN1
+X[1] => WideAnd5.IN1
+X[1] => WideAnd0.IN1
+X[1] => WideAnd1.IN1
+X[1] => WideAnd3.IN1
+X[1] => WideAnd4.IN1
+Y[0] => WideAnd0.IN2
+Y[0] => WideAnd4.IN2
+Y[0] => WideAnd1.IN2
+Y[0] => WideAnd2.IN2
+Y[0] => WideAnd3.IN2
+Y[0] => WideAnd5.IN2
+Y[1] => WideAnd2.IN3
+Y[1] => WideAnd3.IN3
+Y[1] => WideAnd0.IN3
+Y[1] => WideAnd1.IN3
+Y[1] => WideAnd4.IN3
+Y[1] => WideAnd5.IN3
+Z[0] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+Z[1] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+
+
